@@ -4,7 +4,7 @@ portNo = 9999
 databaseFileName = "data.txt"
 
 def findCustomer(keyToSearch):
-    print(customers.items())
+    # print(customers.items())
     # searchedRecord = next(item for item in customers.items() if item[0] == keyToSearch)
     for key, value in customers.items():
         name = key
@@ -18,7 +18,7 @@ def findCustomer(keyToSearch):
 
     if searchedRecord == '':
         searchedRecord = "customer not found"
-    print(searchedRecord)
+    # print(searchedRecord)
     return  searchedRecord
 
 def add_customer(name, age, address, phoneNo):
@@ -38,6 +38,19 @@ def delete_customer(name):
     else:
         deleteMessage = 'customer of given name does not exist'
     return deleteMessage
+
+updateMessage = ''
+def update_customer_age(nameToUpdate, newAge):
+    if nameToUpdate in customers:
+        # print(customers[nameToUpdate])
+        age, address, phoneNo = customers.get(nameToUpdate)
+        age = newAge
+        customers[nameToUpdate] = [age, address, phoneNo]
+        # print(customers[nameToUpdate])
+        updateMessage = 'customer age updated successfully'
+    else:
+        updateMessage = 'customer of given name not found'
+    return updateMessage
 
 def loadRecords():
     database = open(databaseFileName, 'r')
@@ -88,21 +101,22 @@ while True:
             result = str(findCustomer(key))
             conn.send(result.encode())
         elif(data == '2'):
-            # newName = conn.recv(4096).decode().strip()
-            # newAge = conn.recv(4096).decode().strip()
-            # newAddress = conn.recv(4096).decode().strip()
-            # newPhoneNo = conn.recv(4096).decode().strip()
             newData = conn.recv(4096).decode().split('*')
             newName = newData[0].strip()
             newAge = newData[1].strip()
             newAddress = newData[2].strip()
             newPhoneNo = newData[3].strip()
-            print("hello")
             result = str(add_customer(newName, newAge, newAddress, newPhoneNo))
             conn.send(result.encode())
         elif(data == '3'):
             nameToDeleteRecord = conn.recv(4096).decode().strip()
             result = str(delete_customer(nameToDeleteRecord))
+            conn.send(result.encode())
+        elif(data == '4'):
+            newData = conn.recv(4096).decode().split('*')
+            newName = newData[0].strip()
+            newAge = newData[1].strip()
+            result = str(update_customer_age(newName, newAge))
             conn.send(result.encode())
         elif(data == '7'):
             result = str(sendDataReport(customers))

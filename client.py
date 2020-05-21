@@ -57,7 +57,24 @@ while(True):
             name = input("Name cannot be blank. Enter name to add customer : ")
         client.send(name.encode())
     elif (choice == '4'):
-        print('choice is 4')
+        client.send(choice.encode())
+        name = input("Enter name to add customer : ")
+        while (name == ''):
+            name = input("Name cannot be blank. Enter name to add customer : ")
+        while (True):
+            try:
+                age = input("Enter age to update : ")
+                if (age == ''):
+                    break
+                else:
+                    age = int(age)
+                    break
+            except:
+                print("Age should be in Number.")
+                pass
+        data = name + "*" + str(age)
+        client.send(data.encode())
+        # print('choice is 4')
     elif (choice == '5'):
         print('choice is 5')
     elif (choice == '6'):
