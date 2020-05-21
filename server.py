@@ -30,6 +30,15 @@ def add_customer(name, age, address, phoneNo):
         addMessage = "customer already exists"
     return addMessage
 
+def delete_customer(name):
+    deleteMessage = ''
+    if name in customers:
+        del customers[name]
+        deleteMessage = 'customer record is deleted'
+    else:
+        deleteMessage = 'customer of given name does not exist'
+    return deleteMessage
+
 def loadRecords():
     database = open(databaseFileName, 'r')
     customers = {}
@@ -55,7 +64,6 @@ def sendDataReport(customers):
         #     continue
         # else:
         records = records + "\nName :" + str(name).strip() + " -Age :" + str(age).strip() + " -Address :" + str(address).strip() + " -PhoneNo :" + str(phoneNo).strip()
-
     return records
 
 
@@ -84,13 +92,17 @@ while True:
             # newAge = conn.recv(4096).decode().strip()
             # newAddress = conn.recv(4096).decode().strip()
             # newPhoneNo = conn.recv(4096).decode().strip()
-            newData = conn.recv(4096).decode().split('-')
+            newData = conn.recv(4096).decode().split('*')
             newName = newData[0].strip()
             newAge = newData[1].strip()
             newAddress = newData[2].strip()
             newPhoneNo = newData[3].strip()
             print("hello")
             result = str(add_customer(newName, newAge, newAddress, newPhoneNo))
+            conn.send(result.encode())
+        elif(data == '3'):
+            nameToDeleteRecord = conn.recv(4096).decode().strip()
+            result = str(delete_customer(nameToDeleteRecord))
             conn.send(result.encode())
         elif(data == '7'):
             result = str(sendDataReport(customers))

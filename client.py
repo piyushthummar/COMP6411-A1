@@ -47,11 +47,15 @@ while(True):
         # client.send(str(age).encode())
         # client.send(address.encode())
         # client.send(phoneNo.encode())
-        data = name + "-" + str(age) + "-" + address + "-" + phoneNo
+        data = name + "*" + str(age) + "*" + address + "*" + phoneNo
         # print(data)
         client.send(data.encode())
     elif (choice == '3'):
-        print('choice is 3')
+        client.send(choice.encode())
+        name = input("Enter customer's name to delete record : ")
+        while (name == ''):
+            name = input("Name cannot be blank. Enter name to add customer : ")
+        client.send(name.encode())
     elif (choice == '4'):
         print('choice is 4')
     elif (choice == '5'):
