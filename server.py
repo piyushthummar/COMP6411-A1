@@ -52,6 +52,30 @@ def update_customer_age(nameToUpdate, newAge):
         updateMessage = 'customer of given name not found'
     return updateMessage
 
+def update_customer_address(nameToUpdate, newAddress):
+    if nameToUpdate in customers:
+        # print(customers[nameToUpdate])
+        age, address, phoneNo = customers.get(nameToUpdate)
+        address = newAddress
+        customers[nameToUpdate] = [age, address, phoneNo]
+        # print(customers[nameToUpdate])
+        updateMessage = 'customer address updated successfully'
+    else:
+        updateMessage = 'customer of given name not found'
+    return updateMessage
+
+def update_customer_phone_number(nameToUpdate, newPhoneNo):
+    if nameToUpdate in customers:
+        # print(customers[nameToUpdate])
+        age, address, phoneNo = customers.get(nameToUpdate)
+        phoneNo = newPhoneNo
+        customers[nameToUpdate] = [age, address, phoneNo]
+        # print(customers[nameToUpdate])
+        updateMessage = 'customer phone number updated successfully'
+    else:
+        updateMessage = 'customer of given name not found'
+    return updateMessage
+
 def loadRecords():
     database = open(databaseFileName, 'r')
     customers = {}
@@ -88,7 +112,7 @@ server.listen(5)
 print('Server started... waiting for client...')
 while True:
     conn, addr = server.accept()
-    print('client is connected...')
+    print('client is connected by ' + str(addr) + ' address...')
     customers = loadRecords()
     print("Data is loaded from file...")
     while True:
@@ -117,6 +141,18 @@ while True:
             newName = newData[0].strip()
             newAge = newData[1].strip()
             result = str(update_customer_age(newName, newAge))
+            conn.send(result.encode())
+        elif (data == '5'):
+            newData = conn.recv(4096).decode().split('*')
+            newName = newData[0].strip()
+            newAddress = newData[1].strip()
+            result = str(update_customer_address(newName, newAddress))
+            conn.send(result.encode())
+        elif (data == '6'):
+            newData = conn.recv(4096).decode().split('*')
+            newName = newData[0].strip()
+            newPhoneNo = newData[1].strip()
+            result = str(update_customer_phone_number(newName, newPhoneNo))
             conn.send(result.encode())
         elif(data == '7'):
             result = str(sendDataReport(customers))

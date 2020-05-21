@@ -58,12 +58,12 @@ while(True):
         client.send(name.encode())
     elif (choice == '4'):
         client.send(choice.encode())
-        name = input("Enter name to add customer : ")
+        name = input("To update age of customer, Enter name : ")
         while (name == ''):
-            name = input("Name cannot be blank. Enter name to add customer : ")
+            name = input("Name cannot be blank. Enter name to update customer : ")
         while (True):
             try:
-                age = input("Enter age to update : ")
+                age = input("Enter new age to update : ")
                 if (age == ''):
                     break
                 else:
@@ -76,9 +76,23 @@ while(True):
         client.send(data.encode())
         # print('choice is 4')
     elif (choice == '5'):
-        print('choice is 5')
+        client.send(choice.encode())
+        name = input("To update address of customer, Enter name : ")
+        while (name == ''):
+            name = input("Name cannot be blank. Enter name to update customer : ")
+        address = input("Enter new address to update : ")
+        data = name + "*" + address
+        client.send(data.encode())
+        # print('choice is 5')
     elif (choice == '6'):
-        print('choice is 6')
+        client.send(choice.encode())
+        name = input("To update phone_number of customer, enter Name : ")
+        while (name == ''):
+            name = input("Name cannot be blank. Enter name to update customer : ")
+        phoneNo = input("Enter new phone number to update : ")
+        data = name + "*" + phoneNo
+        client.send(data.encode())
+        # print('choice is 6')
     elif (choice == '7'):
         # print(choice)
         client.send(choice.encode())
