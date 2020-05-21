@@ -78,6 +78,7 @@ def update_customer_phone_number(nameToUpdate, newPhoneNo):
 
 def loadRecords():
     database = open(databaseFileName, 'r')
+    # print(database)
     customers = {}
     for record in database.readlines():
         name, age, address, phoneNo = record.split('|')
@@ -110,11 +111,13 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((hostAddress, portNo))
 server.listen(5)
 print('Server started... waiting for client...')
+customers = loadRecords()
+print("Data is loaded from file...")
 while True:
     conn, addr = server.accept()
     print('client is connected by ' + str(addr) + ' address...')
-    customers = loadRecords()
-    print("Data is loaded from file...")
+    # customers = loadRecords()
+    # print("Data is loaded from file...")
     while True:
         data = conn.recv(4096)
         if not data: break
