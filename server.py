@@ -11,7 +11,7 @@ def findCustomer(keyToSearch):
         age, address, phoneNo = value
         searchedRecord = ''
         if name == keyToSearch:
-            searchedRecord = "Name: " + name + " -> Age: " + age + " - Address: " + address + " - PhoneNo: " + phoneNo
+            searchedRecord = "\nName :" + str(name).strip() + " -Age :" + str(age).strip() + " -Address :" + str(address).strip() + " -PhoneNo :" + str(phoneNo).strip()
             break
         else:
             continue
@@ -54,7 +54,7 @@ def sendDataReport(customers):
         # if key == '' or name == '':
         #     continue
         # else:
-        records = records + "Name: " + name + " -> Age: " + age + " - Address: " + address + " - PhoneNo: " + phoneNo
+        records = records + "\nName :" + str(name).strip() + " -Age :" + str(age).strip() + " -Address :" + str(address).strip() + " -PhoneNo :" + str(phoneNo).strip()
 
     return records
 
@@ -80,11 +80,16 @@ while True:
             result = str(findCustomer(key))
             conn.send(result.encode())
         elif(data == '2'):
-            newData = conn.recv(4096).decode().split(' ')
+            # newName = conn.recv(4096).decode().strip()
+            # newAge = conn.recv(4096).decode().strip()
+            # newAddress = conn.recv(4096).decode().strip()
+            # newPhoneNo = conn.recv(4096).decode().strip()
+            newData = conn.recv(4096).decode().split('-')
             newName = newData[0].strip()
             newAge = newData[1].strip()
             newAddress = newData[2].strip()
             newPhoneNo = newData[3].strip()
+            print("hello")
             result = str(add_customer(newName, newAge, newAddress, newPhoneNo))
             conn.send(result.encode())
         elif(data == '7'):
