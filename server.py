@@ -11,7 +11,7 @@ def findCustomer(keyToSearch):
         age, address, phoneNo = value
         searchedRecord = ''
         if name == keyToSearch:
-            searchedRecord = "\nName :" + str(name).strip() + " -Age :" + str(age).strip() + " -Address :" + str(address).strip() + " -PhoneNo :" + str(phoneNo).strip()
+            searchedRecord = "\nName:" + str(name).strip() + " -Age:" + str(age).strip() + " -Address:" + str(address).strip() + " -PhoneNo:" + str(phoneNo).strip()
             break
         else:
             continue
@@ -82,16 +82,17 @@ def loadRecords():
     customers = {}
     for record in database.readlines():
         name, age, address, phoneNo = record.split('|')
-        if name != '':
-            customers[name] = [age, address, phoneNo]
-        else:
+        str(name).strip()
+        if name == '' or name == ' ':
             continue
+        else:
+            customers[name] = [age, address, phoneNo]
         # customers[name] = [age, address, phoneNo]
     database.close()
     return customers
 
 def sendDataReport(customers):
-    sortedCustomers = sorted(customers.items(), key = lambda x:x[0])
+    sortedCustomers = sorted(customers.items(), key = lambda x:x[0].lower())
     records = ''
     dataDictionary = dict(sortedCustomers)
 
@@ -101,7 +102,7 @@ def sendDataReport(customers):
         # if key == '' or name == '':
         #     continue
         # else:
-        records = records + "\nName :" + str(name).strip() + " -Age :" + str(age).strip() + " -Address :" + str(address).strip() + " -PhoneNo :" + str(phoneNo).strip()
+        records = records + "\nName:" + str(name).strip() + " -Age:" + str(age).strip() + " -Address:" + str(address).strip() + " -PhoneNo:" + str(phoneNo).strip()
     return records
 
 
