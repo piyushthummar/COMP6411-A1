@@ -105,6 +105,9 @@ def sendDataReport(customers):
         records = records + "\nName:" + str(name).strip() + " -Age:" + str(age).strip() + " -Address:" + str(address).strip() + " -PhoneNo:" + str(phoneNo).strip()
     return records
 
+def sendDBMenu():
+    menu = "\nPython DB Menu\n1.Find customer\n2.Add customer\n3.Delete customer\n4.Update custmer age\n5.Update custmer address\n6.Update custmer phone\n7.Print report\n8.Exit"
+    return str(menu)
 
 #Main Program
 import socket
@@ -120,6 +123,7 @@ while True:
     # customers = loadRecords()
     # print("Data is loaded from file...")
     while True:
+        # conn.send(sendDBMenu().encode())
         data = conn.recv(4096)
         if not data: break
         data = data.decode().strip()
