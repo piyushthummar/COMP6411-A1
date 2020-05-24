@@ -41,10 +41,10 @@ client.connect((hostAddress, portNo))
 print("Client is connected to Server.")
 
 while(True):
-    # dbMenu = client.recv(4096).decode()
-    # print(dbMenu)
-    printDBOptions()
-    choice = input("Enter your choice from option 1 to 8 : ")
+    dbMenu = client.recv(4096).decode()
+    print(dbMenu)
+    # printDBOptions()
+    choice = input("Enter your choice from option 1 to 8 : ").strip()
     if(choice == '1'):
         client.send(choice.encode())
         name = enterNameInput()

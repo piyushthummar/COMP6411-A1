@@ -123,7 +123,7 @@ while True:
     # customers = loadRecords()
     # print("Data is loaded from file...")
     while True:
-        # conn.send(sendDBMenu().encode())
+        conn.send(sendDBMenu().encode())
         data = conn.recv(4096)
         if not data: break
         data = data.decode().strip()
@@ -172,4 +172,4 @@ while True:
             print('client disconnected')
             print('**************************************************************************************')
         else:
-            print('no valid data to send')
+            print('no valid choice. so, no valid data to send')
